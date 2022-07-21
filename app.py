@@ -1,8 +1,7 @@
-from unicodedata import decimal
 import pandas as pd
 import plotly.express as px
 import streamlit as st
-import datetime
+
 
 
 st.set_page_config(
@@ -47,7 +46,7 @@ st.markdown("##")
 
 # TOP KPI's
 total_kg = int(df_selection["Number_of_KG"].sum())
-total_sales = round(df_selection['Total_Sales_(converted)'].mean(),1)
+total_sales = round(df_selection['Total_Sales_(converted)'].sum(),1)
 average_price_per_kg = round(df_selection['Price_per_KG_(converted)'].mean(),0)
 
 left_column, middle_column, right_column = st.columns(3)
