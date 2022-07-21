@@ -47,7 +47,7 @@ st.markdown("##")
 
 # TOP KPI's
 total_kg = int(df_selection["Number_of_KG"].sum())
-total_sales = round(df_selection['Total_Sales_(converted)'].mean(),1)
+total_sales = round(df_selection['Total_Sales_(converted)'].sum(),1)
 average_price_per_kg = round(df_selection['Price_per_KG_(converted)'].mean(),0)
 
 left_column, middle_column, right_column = st.columns(3)
