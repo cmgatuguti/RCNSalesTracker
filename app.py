@@ -75,6 +75,8 @@ volume_by_month = (
     df_selection.groupby(by=['End_Month']).sum()[['tonnes']].sort_values(by='End_Month').round(-3)
 )
 
+colors = ['#ED7D31']
+
 fig_country_volume = px.bar(
     volume_by_country,
     x="tonnes",
@@ -82,6 +84,7 @@ fig_country_volume = px.bar(
     orientation="h",
     title="<b> Volume of Sales</b>",
     template="plotly_white",
+    color_discrete_sequence=colors,
 
 )
 
