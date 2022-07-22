@@ -2,8 +2,6 @@ import pandas as pd
 import plotly.express as px
 import streamlit as st
 
-
-
 st.set_page_config(
     page_title='RCN Sales External Dashboard',
     page_icon=':bar_chart:',
@@ -47,11 +45,7 @@ st.markdown("##")
 # TOP KPI's
 total_kg = int(df_selection["Number_of_KG"].sum())
 total_sales = round(df_selection['Total_Sales_(converted)'].sum(),1)
-<<<<<<< HEAD
-average_price_per_kg = round(df_selection['Price_per_KG_(converted)'].mean(),0)
-=======
-average_price_per_kg = round(df_selection['Price_per_KG_(converted)'].mean(),1)
->>>>>>> 27f67c343dc4a711146b3637fdc729849f07764f
+average_price_per_kg = round(df_selection['Price_per_KG_(converted)'].mean(),2)
 
 left_column, middle_column, right_column = st.columns(3)
 with left_column:
@@ -78,6 +72,11 @@ volume_by_month = (
     df_selection.groupby(by=['End_Month']).sum()[['tonnes']].sort_values(by='End_Month').round(-3)
 )
 
+price_by_month = (
+    #df_selection.groupby(by=['Country']).sum()[['Number_of_KG']].sort_values(by='Number_of_KG').round(-3)
+    df_selection.groupby(by=['End_Month']).mean()[['Price_per_KG_(converted)']].sort_values(by='End_Month').round(2)
+)
+
 colors = ['#C46E28']
 
 fig_country_volume = px.bar(
@@ -88,6 +87,9 @@ fig_country_volume = px.bar(
     title="<b> Volume of Sales</b>",
     template="plotly_white",
     color_discrete_sequence=colors,
+    labels={            
+            "tonnes": "Tonnesr",
+            }
 
 )
 
@@ -96,14 +98,36 @@ fig_month_volume = px.bar(
     y="tonnes",
     x=volume_by_month.index,
     orientation="v",
-    title="<b> Volume of Sales</b>",
+    title="<b>Volume of Sales</b>",
     color_discrete_sequence=colors,
+    labels={
+            "End_Month": "Month/Year",
+            }
+
+)
+
+fig_price_month = px.line(
+    price_by_month,
+    y="Price_per_KG_(converted)",
+    x=price_by_month.index, 
+    color_discrete_sequence=colors,
+    title="<b>Average Price Per KG in USD</b>",
+    labels={
+            "Price_per_KG_(converted)": "Average Price per KG(USD))",
+            "End_Month": "Month/Year",
+            }
+    #color="Country",
+
 
 )
 
 left_column, right_column = st.columns(2)
 left_column.plotly_chart(fig_country_volume, use_container_width=True)
-right_column.plotly_chart(fig_month_volume,use_container_width=True)
+right_column.plotly_chart(fig_month_volume, use_container_width=True)
+
+st.plotly_chart(fig_price_month, use_container_width=True)
+
+
 
 hide_st_style = """
     <style>
