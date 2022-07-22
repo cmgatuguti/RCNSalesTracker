@@ -47,7 +47,11 @@ st.markdown("##")
 # TOP KPI's
 total_kg = int(df_selection["Number_of_KG"].sum())
 total_sales = round(df_selection['Total_Sales_(converted)'].sum(),1)
+<<<<<<< HEAD
 average_price_per_kg = round(df_selection['Price_per_KG_(converted)'].mean(),0)
+=======
+average_price_per_kg = round(df_selection['Price_per_KG_(converted)'].mean(),1)
+>>>>>>> 27f67c343dc4a711146b3637fdc729849f07764f
 
 left_column, middle_column, right_column = st.columns(3)
 with left_column:
@@ -74,6 +78,8 @@ volume_by_month = (
     df_selection.groupby(by=['End_Month']).sum()[['tonnes']].sort_values(by='End_Month').round(-3)
 )
 
+colors = ['#C46E28']
+
 fig_country_volume = px.bar(
     volume_by_country,
     x="tonnes",
@@ -81,6 +87,7 @@ fig_country_volume = px.bar(
     orientation="h",
     title="<b> Volume of Sales</b>",
     template="plotly_white",
+    color_discrete_sequence=colors,
 
 )
 
@@ -90,8 +97,7 @@ fig_month_volume = px.bar(
     x=volume_by_month.index,
     orientation="v",
     title="<b> Volume of Sales</b>",
-    
-    barmode='group',
+    color_discrete_sequence=colors,
 
 )
 
